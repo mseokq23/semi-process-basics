@@ -27,10 +27,10 @@ ax2.grid(alpha=0.25)
 plt.tight_layout()
 save(f, P, "arde")
 
-# 2. 로딩 효과
+# 2. loading 효과
 f, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 4.0), gridspec_kw=dict(width_ratios=[1.2, 1]))
 canvas(0, 0, (0, 16), (0, 7), ax=ax1)
-ax1.set_title("마이크로 로딩: 패턴이 빽빽한 곳이 덜 깎임", loc="left", fontsize=11)
+ax1.set_title("micro loading: pattern이 빽빽한 곳이 덜 깎임", loc="left", fontsize=11)
 rect(ax1, 0.3, 0.3, 15.4, 5.6, "ox", lw=0.6)
 for x0 in np.arange(1.0, 7.5, 1.3):
     rect(ax1, x0, 2.6, 0.65, 3.3, "white", lw=0.6, z=3)
@@ -40,15 +40,15 @@ text(ax1, 4.2, 1.6, "밀집: 반응종을 나눠 씀", size=9.5)
 text(ax1, 11.3, 1.2, "고립", size=9.5)
 A = np.linspace(0, 1, 200)
 ax2.plot(A * 100, 1 / (1 + 1.5 * A), color=PAL[1], lw=2.2)
-ax2.set_xlabel("웨이퍼에서 식각되는 면적 비율 (%)")
+ax2.set_xlabel("wafer에서 식각되는 면적 비율 (%)")
 ax2.set_ylabel("식각률 (상대값)")
-ax2.set_title("매크로 로딩: 깎을 면적이 넓으면 느려짐 (개념)", loc="left", fontsize=11)
+ax2.set_title("macro loading: 깎을 면적이 넓으면 느려짐 (개념)", loc="left", fontsize=11)
 ax2.grid(alpha=0.25)
 plt.tight_layout()
 save(f, P, "loading")
 
-# 3. 프로파일 불량
-tt = ["정상 (수직)", "보잉 (가운데가 부풂)", "테이퍼 (아래가 좁음)", "노칭 (바닥 옆이 파임)", "마이크로 트렌치",
+# 3. profile 불량
+tt = ["정상 (수직)", "bowing (가운데가 부풂)", "taper (아래가 좁음)", "notching (바닥 옆이 파임)", "micro trench",
       "식각 멈춤 (Not open)"]
 f, axs = panels(6, 6, 2.3, 3.3, (0, 6), (0, 8.4), titles=tt, size=9.5)
 for k, ax in enumerate(axs):
@@ -76,7 +76,7 @@ for k, ax in enumerate(axs):
         rect(ax, 0.2, 1.2, 5.6, 2.4, "ox", lw=0.0)
         line(ax, [L, R_], [3.6, 3.6], lw=0.6)
         rect(ax, 2.3, 3.6, 1.4, 0.25, "#6d4c41", lw=0)
-        text(ax, 3.0, 2.4, "폴리머가 쌓여서 멈춤", size=8.3)
+        text(ax, 3.0, 2.4, "polymer가 쌓여서 멈춤", size=8.3)
     if k == 3:
         poly(ax, [(L, 1.2), (L - 0.7, 1.2), (L, 1.7)], "white", lw=0.6, z=3)
         poly(ax, [(R_, 1.2), (R_ + 0.7, 1.2), (R_, 1.7)], "white", lw=0.6, z=3)
@@ -87,7 +87,7 @@ for k, ax in enumerate(axs):
     rect(ax, 3.8, 6.8, 2.0, 0.7, "pr", lw=0.6)
 save(f, P, "profiles")
 
-# 4. 차징 → 노칭
+# 4. charging → notching
 f, ax = canvas(8.4, 5.6, (0, 14), (0, 9.2))
 rect(ax, 0.5, 0.5, 13, 1.6, "ox", lw=0.6)
 text(ax, 2.0, 1.3, "절연막 (밑)", size=9)
@@ -106,15 +106,15 @@ text(ax, 10.6, 8.6, "전자: 사방에서 → 위쪽 PR 벽에\n먼저 붙음 (�
 arrow(ax, 6.2, 8.8, 6.2, 3.0, color="red", lw=1.3)
 ax.add_patch(FancyArrowPatch((7.6, 8.8), (5.25, 2.4), connectionstyle="arc3,rad=-0.25", arrowstyle="-|>",
                              mutation_scale=10, color=C["red"], lw=1.3, zorder=9))
-text(ax, 2.2, 8.6, "이온: 수직으로 와서 바닥이 (+)\n→ 뒤에 오는 이온이 옆으로 휨", size=9, color=C["red"], ha="center")
+text(ax, 2.2, 8.6, "ion: 수직으로 와서 바닥이 (+)\n→ 뒤에 오는 ion이 옆으로 휨", size=9, color=C["red"], ha="center")
 poly(ax, [(5.0, 2.1), (5.0, 2.6), (4.5, 2.1)], "white", lw=0.6, z=4)
 poly(ax, [(9.0, 2.1), (9.0, 2.6), (9.5, 2.1)], "white", lw=0.6, z=4)
-text(ax, 3.3, 3.0, "노칭", size=10, color=C["red"], weight="bold")
+text(ax, 3.3, 3.0, "notching", size=10, color=C["red"], weight="bold")
 save(f, P, "charging")
 
 # 5. ALE
-tt = ["① 개질: Cl₂가 표면 한 층에만 붙음", "② 퍼지: 남은 Cl₂ 빼냄", "③ 제거: 낮은 에너지 Ar⁺로 개질층만 떼어냄",
-      "④ 퍼지 → ①부터 반복"]
+tt = ["① 개질: Cl₂가 표면 한 층에만 붙음", "② purge: 남은 Cl₂ 빼냄", "③ 제거: 낮은 energy Ar⁺로 개질층만 떼어냄",
+      "④ purge → ①부터 반복"]
 f, axs = panels(4, 4, 3.4, 2.8, (0, 10), (0, 6.0), titles=tt, size=9.8)
 for k, ax in enumerate(axs):
     for i in range(4):
@@ -141,18 +141,18 @@ epc = np.where(E < 20, 0.55 * E / 20, 0.55) + np.where(E > 60, 0.03 * (E - 60), 
 f, ax = plot_ax(6.8, 3.8)
 ax.plot(E, epc, color=PAL[0], lw=2.4)
 ax.axvspan(20, 60, color="#c8e6c9", alpha=0.6)
-ax.text(40, 1.3, "ALE 창: 한 사이클에\n한 층 정도만 깎임", ha="center", fontsize=9.5)
+ax.text(40, 1.3, "ALE 창: 한 cycle에\n한 층 정도만 깎임", ha="center", fontsize=9.5)
 ax.text(8, 0.85, "개질층도\n못 떼어냄", fontsize=9, ha="center")
-ax.text(82, 0.45, "아래 Si까지\n스퍼터됨", fontsize=9, ha="center")
+ax.text(82, 0.45, "아래 Si까지\nsputter됨", fontsize=9, ha="center")
 ax.set_ylim(0, 1.8)
-ax.set_xlabel("이온 에너지 (eV)")
-ax.set_ylabel("사이클당 식각 두께 (nm)")
+ax.set_xlabel("ion energy (eV)")
+ax.set_ylabel("cycle당 식각 두께 (nm)")
 ax.set_title("ALE 창 (개념)", loc="left")
 save(f, P, "ale_window")
 
 # 6. Bosch 공정
 tt = ["① SF₆ 식각 (등방성, 짧게)", "② C₄F₈ 보호막 (전체에)", "③ 바닥 보호막만 제거 → 다시 식각",
-      "④ 반복 → 깊은 홈 (스캘럽)"]
+      "④ 반복 → 깊은 홈 (scallop)"]
 f, axs = panels(4, 4, 3.0, 4.2, (0, 8), (0, 11), titles=tt, size=9.8)
 
 

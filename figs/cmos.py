@@ -1,4 +1,4 @@
-"""CMOS 인버터 단면 (NMOS 왼쪽, PMOS 오른쪽). 1, 2, 34, 35, 38편에서 같이 씀"""
+"""CMOS inverter 단면 (NMOS 왼쪽, PMOS 오른쪽). 1, 2, 34, 35, 38편에서 같이 씀"""
 import numpy as np
 from common import C, rect, poly, text, arrow, ions, line
 
@@ -6,7 +6,7 @@ X0, X1 = 0.0, 24.0
 STI = [(0.0, 1.0), (11.0, 13.0), (23.0, 24.0)]
 ACT = [(1.0, 11.0), (13.0, 23.0)]
 GATE = [(5.4, 6.6), (17.4, 18.6)]
-TRD = -1.6          # 트렌치 깊이
+TRD = -1.6          # trench 깊이
 PADOX, NIT = 0.12, 0.6
 GOX, PTOP = 0.1, 1.5
 SPW, SPH = 0.45, 1.42
@@ -48,7 +48,7 @@ def pr(ax, x0, x1, y0, h=0.9):
 def draw(ax, st, lab=True, size=8.5):
     """st: 단계별로 있는 것만 True"""
     g = st.get
-    # 기판, 웰
+    # 기판, well
     rect(ax, X0, -7, X1 - X0, 7, "sub", z=1, lw=0.6)
     if g("wells"):
         rect(ax, 0, WELL_D, 12, -WELL_D, "pw", z=1.2, lw=0.6)
@@ -59,7 +59,7 @@ def draw(ax, st, lab=True, size=8.5):
     elif lab and not g("no_sub_label"):
         text(ax, 12, -2.6, "p형 Si 기판 (100)", size=size)
 
-    # 소스/드레인, LDD
+    # source/drain, LDD
     sd = g("sd") or ""
     ldd = g("ldd") or ""
     for i, ((a0, a1), (gx0, gx1)) in enumerate(zip(ACT, GATE)):
@@ -84,7 +84,7 @@ def draw(ax, st, lab=True, size=8.5):
     elif sti == "liner":
         for a, b in STI:
             rect(ax, a, TRD, b - a, -TRD, "#ffffff", z=4, lw=0.8)
-            # 측벽과 바닥에 얇은 라이너
+            # 측벽과 바닥에 얇은 liner
             if a > 0:
                 rect(ax, a, TRD, 0.12, -TRD, "ox", z=4.1, lw=0.5)
             if b < 24:
@@ -102,7 +102,7 @@ def draw(ax, st, lab=True, size=8.5):
         for a, b in STI:
             rect(ax, a, TRD, b - a, -TRD, "ox", z=4, lw=0.8)
 
-    # 패드 산화막 + 질화막
+    # pad 산화막 + 질화막
     pad = g("pad")
     if pad == "blanket":
         rect(ax, X0, 0, X1 - X0, PADOX, "ox", z=5, lw=0.6)
@@ -115,7 +115,7 @@ def draw(ax, st, lab=True, size=8.5):
         for a, b in ACT:
             rect(ax, a, 0, b - a, PADOX, "ox", z=5, lw=0.6)
 
-    # 게이트 산화막, poly
+    # gate 산화막, poly
     if g("gox") == "active":
         for a, b in ACT:
             rect(ax, a, 0, b - a, GOX, "ox", z=5, lw=0.6)
@@ -128,18 +128,18 @@ def draw(ax, st, lab=True, size=8.5):
             if g("sil"):
                 rect(ax, gx0, PTOP, gx1 - gx0, 0.16, "sil", z=6.3, lw=0.6)
 
-    # 스페이서
+    # spacer
     if g("spacer_blanket"):
         conformal(ax, [(a, b, PTOP) for a, b in GATE], 0.42, "nit", z=6.5)
     if g("spacer"):
         for gx0, gx1 in GATE:
             spacer(ax, gx0, gx1)
 
-    # 살리사이드용 금속
+    # salicide용 금속
     if g("metal_blanket"):
         conformal(ax, [(a - SPW, b + SPW, PTOP) for a, b in GATE], 0.16, "#7f7f7f", z=6.8)
     if g("metal_left"):
-        # 반응 안 한 금속: STI, 스페이서 위에만 남음
+        # 반응 안 한 금속: STI, spacer 위에만 남음
         for a, b in STI:
             rect(ax, a, 0, b - a, 0.16, "#7f7f7f", z=6.8, lw=0.6)
         for gx0, gx1 in GATE:
@@ -186,7 +186,7 @@ def draw(ax, st, lab=True, size=8.5):
         if g("pass"):
             rect(ax, X0, IMD_TOP, X1 - X0, PASS_T, "nit", z=8.5, lw=0.7)
 
-    # PR, 이온
+    # PR, ion
     for (x0, x1, y0) in g("pr", []):
         pr(ax, x0, x1, y0, g("pr_h", 0.9))
     if g("ions"):
@@ -209,29 +209,29 @@ def draw(ax, st, lab=True, size=8.5):
         text(ax, 18.0, g("dev_y", 2.6), "PMOS", size=size + 1, weight="bold")
 
 
-# 34편: 기판 ~ 게이트
+# 34편: 기판 ~ gate
 A = [
     ("① p형 Si 기판 준비, 세정", dict()),
-    ("② 패드 산화막 + 질화막", dict(pad="blanket")),
-    ("③ Active 포토 (소자 자리에 PR)", dict(pad="blanket", pr=[(1.0, 11.0, 0.72), (13.0, 23.0, 0.72)])),
-    ("④ 질화막·산화막·Si 식각 → 트렌치", dict(pad="active", sti="trench",
+    ("② pad 산화막 + 질화막", dict(pad="blanket")),
+    ("③ Active photo (소자 자리에 PR)", dict(pad="blanket", pr=[(1.0, 11.0, 0.72), (13.0, 23.0, 0.72)])),
+    ("④ 질화막·산화막·Si 식각 → trench", dict(pad="active", sti="trench",
                                          pr=[(1.0, 11.0, 0.72), (13.0, 23.0, 0.72)])),
-    ("⑤ PR 제거, 라이너 산화", dict(pad="active", sti="liner")),
-    ("⑥ HDP 산화막으로 트렌치 채움", dict(pad="active", sti="fill")),
+    ("⑤ PR 제거, liner 산화", dict(pad="active", sti="liner")),
+    ("⑥ HDP 산화막으로 trench 채움", dict(pad="active", sti="fill")),
     ("⑦ CMP (질화막에서 멈춤)", dict(pad="active", sti="cmp")),
-    ("⑧ 질화막, 패드 산화막 제거 → STI 완성", dict(sti="final")),
-    ("⑨ N-well 포토 + 인(P) 주입", dict(sti="final", pr=[(0.0, 12.0, 0.0)],
-                                      ions=([(12.0, 24.0)], 0.0, "P⁺ 이온 (높은 에너지)"))),
-    ("⑩ P-well 포토 + 붕소(B) 주입", dict(sti="final", pr=[(12.0, 24.0, 0.0)],
-                                       ions=([(0.0, 12.0)], 0.0, "B⁺ 이온"))),
-    ("⑪ 열처리로 웰 완성", dict(sti="final", wells=True)),
+    ("⑧ 질화막, pad 산화막 제거 → STI 완성", dict(sti="final")),
+    ("⑨ N-well photo + 인(P) 주입", dict(sti="final", pr=[(0.0, 12.0, 0.0)],
+                                      ions=([(12.0, 24.0)], 0.0, "P⁺ ion (높은 energy)"))),
+    ("⑩ P-well photo + 붕소(B) 주입", dict(sti="final", pr=[(12.0, 24.0, 0.0)],
+                                       ions=([(0.0, 12.0)], 0.0, "B⁺ ion"))),
+    ("⑪ 열처리로 well 완성", dict(sti="final", wells=True)),
     ("⑫ 문턱전압(Vt) 조절 주입 (NMOS 예)", dict(sti="final", wells=True, pr=[(12.0, 24.0, 0.0)],
-                                             ions=([(0.0, 12.0)], 0.0, "낮은 에너지, 적은 도즈"))),
-    ("⑬ 게이트 산화 (건식, 얇게)", dict(sti="final", wells=True, gox="active")),
+                                             ions=([(0.0, 12.0)], 0.0, "낮은 energy, 적은 dose"))),
+    ("⑬ gate 산화 (건식, 얇게)", dict(sti="final", wells=True, gox="active")),
     ("⑭ poly-Si 증착 (LPCVD)", dict(sti="final", wells=True, gox="active", poly="blanket")),
-    ("⑮ 게이트 포토", dict(sti="final", wells=True, gox="active", poly="blanket",
+    ("⑮ gate photo", dict(sti="final", wells=True, gox="active", poly="blanket",
                        pr=[(5.4, 6.6, 1.5), (17.4, 18.6, 1.5)])),
-    ("⑯ poly 식각, PR 제거 → 게이트", dict(sti="final", wells=True, gates=True)),
+    ("⑯ poly 식각, PR 제거 → gate", dict(sti="final", wells=True, gates=True)),
 ]
 
 _base = dict(sti="final", wells=True, gates=True)
@@ -249,24 +249,24 @@ B = [
                                          ions=([(0.0, 12.0)], 1.9, "As⁺ (얕게, 적게)"))),
     ("② PLDD: NMOS 가리고 BF₂ 주입", _s(ldd="np", pr=[(0.0, 12.0, 0.0)], pr_h=1.9,
                                       ions=([(12.0, 24.0)], 1.9, "BF₂⁺"))),
-    ("③ 스페이서용 질화막 증착", _s(ldd="np", spacer_blanket=True)),
-    ("④ 에치백 (이방성 식각) → 스페이서", _s(ldd="np", spacer=True)),
+    ("③ spacer용 질화막 증착", _s(ldd="np", spacer_blanket=True)),
+    ("④ etch back (이방성 식각) → spacer", _s(ldd="np", spacer=True)),
     ("⑤ N⁺ S/D: PMOS 가리고 As 주입", _s(ldd="np", spacer=True, sd="n", pr=[(12.0, 24.0, 0.0)],
                                       pr_h=1.9, ions=([(0.0, 12.0)], 1.9, "As⁺ (많이)"))),
     ("⑥ P⁺ S/D: NMOS 가리고 B 주입 → RTA", _s(ldd="np", spacer=True, sd="np",
                                           pr=[(0.0, 12.0, 0.0)], pr_h=1.9,
                                           ions=([(12.0, 24.0)], 1.9, "B⁺ / BF₂⁺ (많이)"))),
     ("⑦ 금속(Co, Ni) 얇게 증착", _s(ldd="np", spacer=True, sd="np", metal_blanket=True)),
-    ("⑧ 1차 열처리 → Si 닿은 곳만 실리사이드", _s(ldd="np", spacer=True, sd="np", sil=True,
+    ("⑧ 1차 열처리 → Si 닿은 곳만 silicide", _s(ldd="np", spacer=True, sd="np", sil=True,
                                            metal_left=True)),
     ("⑨ 반응 안 한 금속 제거 + 2차 열처리", _s(ldd="np", spacer=True, sd="np", sil=True)),
     ("⑩ 층간 절연막(PMD) 증착", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="bumpy")),
     ("⑪ CMP로 평탄화", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat")),
-    ("⑫ 컨택 포토 + 식각", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat", ct="hole")),
+    ("⑫ contact photo + 식각", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat", ct="hole")),
     ("⑬ Ti/TiN + W 증착", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat", ct="fill")),
-    ("⑭ W CMP → 컨택 플러그", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat",
+    ("⑭ W CMP → contact plug", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat",
                                 ct="plug")),
-    ("⑮ Metal1 (Cu 다마신)", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat", ct="plug",
+    ("⑮ Metal1 (Cu damascene)", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat", ct="plug",
                               m1=True)),
     ("⑯ Via1 + Metal2 + 보호막", _s(ldd="np", spacer=True, sd="np", sil=True, pmd="flat",
                                  ct="plug", m1=True, m2=True, **{"pass": True})),

@@ -6,11 +6,11 @@ P = 33
 # 1. 오염 종류
 f, ax = canvas(11.2, 3.9, (0, 26), (-2.2, 7.0))
 rect(ax, 0, -2.2, 26, 2.2, "si", lw=0.6)
-text(ax, 13.0, -1.3, "Si 웨이퍼", size=10)
-# 파티클
+text(ax, 13.0, -1.3, "Si wafer", size=10)
+# particle
 circ(ax, 3.0, 1.05, 1.05, "#9e9e9e", lw=0.8)
-text(ax, 3.0, 3.1, "파티클", size=10.5, weight="bold")
-text(ax, 3.0, 4.6, "패턴 단락, 끊김\n막 속에 박힘", size=8.8, color="#444444")
+text(ax, 3.0, 3.1, "particle", size=10.5, weight="bold")
+text(ax, 3.0, 4.6, "pattern 단락, 끊김\n막 속에 박힘", size=8.8, color="#444444")
 # 유기물
 xs = np.linspace(7.0, 11.5, 100)
 ax.fill_between(xs, 0, 0.35 + 0.15 * np.sin(xs * 4), color="#c8a165", ec="#333333", lw=0.6, zorder=3)
@@ -25,7 +25,7 @@ text(ax, 15.4, 4.6, "산화막 신뢰성 저하, 누설 전류,\nNa⁺는 산화
 # 자연 산화막
 rect(ax, 19.5, 0, 6.0, 0.28, "ox", lw=0.6)
 text(ax, 22.5, 3.1, "자연 산화막", size=10.5, weight="bold")
-text(ax, 22.5, 4.6, "공기, 물에 닿으면 생기는 얇은 SiO₂\n→ 접촉 저항, 에피 불량", size=8.8, color="#444444")
+text(ax, 22.5, 4.6, "공기, 물에 닿으면 생기는 얇은 SiO₂\n→ 접촉 저항, epi 불량", size=8.8, color="#444444")
 for x in (3.0, 9.25, 15.4, 22.5):
     arrow(ax, x, 2.75, x, 1.4 if x == 3.0 else 0.8, color="#777777", lw=0.9, ms=7)
 save(f, P, "contaminants")
@@ -33,9 +33,9 @@ save(f, P, "contaminants")
 # 2. RCA 세정 순서
 steps = [("SPM", "H₂SO₄ + H₂O₂\n120 °C 근처", "유기물, PR 찌꺼기", "#fde2e2"),
          ("DHF", "묽은 HF\n상온", "자연 산화막\n(+ 그 안의 금속)", "#e3f2fd"),
-         ("SC-1 (APM)", "NH₄OH + H₂O₂ + H₂O\n60 ~ 80 °C", "파티클, 유기물", "#e8f5e9"),
+         ("SC-1 (APM)", "NH₄OH + H₂O₂ + H₂O\n60 ~ 80 °C", "particle, 유기물", "#e8f5e9"),
          ("SC-2 (HPM)", "HCl + H₂O₂ + H₂O\n60 ~ 80 °C", "금속", "#fff3e0"),
-         ("린스 + 건조", "초순수(DIW)\n스핀, IPA", "약액 제거,\n얼룩 없이 말리기", "#ede7f6")]
+         ("rinse + 건조", "초순수(DIW)\nspin, IPA", "약액 제거,\n얼룩 없이 말리기", "#ede7f6")]
 f, ax = canvas(13.2, 3.6, (0, 31), (-0.6, 7.6))
 for i, (name, chem, target, c) in enumerate(steps):
     x = 0.4 + i * 6.2
@@ -46,12 +46,12 @@ for i, (name, chem, target, c) in enumerate(steps):
     arrow(ax, x + 2.5, 3.3, x + 2.5, 2.6, color="#777777", lw=0.9, ms=7)
     if i < len(steps) - 1:
         arrow(ax, x + 5.05, 5.2, x + 6.15, 5.2, lw=1.2, ms=9)
-        text(ax, x + 5.6, 4.45, "린스", size=8, color="#555555")
+        text(ax, x + 5.6, 4.45, "rinse", size=8, color="#555555")
 text(ax, 15.5, 0.2, "빨간 글씨: 주로 없애는 것. 순서와 조합은 공정마다 다름", size=9, color="#555555")
 save(f, P, "rca_flow")
 
-# 3. SC-1 파티클 제거
-tt = ["① 파티클이 표면에 붙어 있음", "② H₂O₂: 표면을 얇게 산화", "③ NH₄OH: 산화막을 조금 녹여 밑을 파냄",
+# 3. SC-1 particle 제거
+tt = ["① particle이 표면에 붙어 있음", "② H₂O₂: 표면을 얇게 산화", "③ NH₄OH: 산화막을 조금 녹여 밑을 파냄",
       "④ 둘 다 − 전하 → 서로 밀어서 다시 안 붙음"]
 f, axs = panels(4, 4, 3.3, 3.0, (0, 10), (-1.6, 6.0), titles=tt, size=9.6)
 for k, ax in enumerate(axs):
@@ -92,15 +92,15 @@ ax.axvspan(9.5, 11, color=C["green"], alpha=0.12)
 ax.text(10.25, 52, "SC-1\n(pH 10 근처)", ha="center", fontsize=9)
 ax.set_xlabel("pH")
 ax.set_ylabel("표면 전위 (mV, 개념)")
-ax.set_title("pH가 높으면 Si 표면과 대부분의 파티클이 둘 다 − 전하 (개념 그래프)", loc="left", fontsize=10.5)
+ax.set_title("pH가 높으면 Si 표면과 대부분의 particle이 둘 다 − 전하 (개념 그래프)", loc="left", fontsize=10.5)
 ax.legend(fontsize=9, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3)
 save(f, P, "zeta")
 
 # 5. 배치 vs 매엽
-f, axs = panels(2, 2, 6.2, 3.8, (0, 16), (-0.6, 9.4), titles=["배치식 (웨트 벤치): 여러 장을 조에 담금",
+f, axs = panels(2, 2, 6.2, 3.8, (0, 16), (-0.6, 9.4), titles=["batch식 (wet bench): 여러 장을 조에 담금",
                                                            "매엽식: 한 장씩 돌리면서 뿌림"], size=10.5)
 ax = axs[0]
-for i, (s, c) in enumerate([("SPM", "#fde2e2"), ("린스", "#e3f2fd"), ("SC-1", "#e8f5e9"), ("린스", "#e3f2fd"),
+for i, (s, c) in enumerate([("SPM", "#fde2e2"), ("rinse", "#e3f2fd"), ("SC-1", "#e8f5e9"), ("rinse", "#e3f2fd"),
                             ("SC-2", "#fff3e0"), ("건조", "#ede7f6")]):
     x = 0.3 + i * 2.6
     rect(ax, x, 0.0, 2.3, 3.6, c, lw=0.8)
@@ -109,8 +109,8 @@ for j in range(7):
     rect(ax, 3.0 + j * 0.16, 0.6, 0.06, 2.6, "si", lw=0.3, z=4)
 rect(ax, 2.85, 0.4, 1.4, 0.2, "#9e9e9e", lw=0.4, z=4)
 arrow(ax, 4.4, 4.6, 6.6, 4.6, lw=1.2, ms=9)
-text(ax, 5.6, 5.2, "카세트째로 옮김", size=9)
-text(ax, 8.0, 7.6, "한 번에 25 ~ 50장 → 처리량 많고 약액 덜 씀\n앞 웨이퍼 오염이 약액에 남을 수 있음", size=8.8)
+text(ax, 5.6, 5.2, "cassette째로 옮김", size=9)
+text(ax, 8.0, 7.6, "한 번에 25 ~ 50장 → 처리량 많고 약액 덜 씀\n앞 wafer 오염이 약액에 남을 수 있음", size=8.8)
 ax = axs[1]
 rect(ax, 2.0, 1.0, 12.0, 0.4, "si", lw=0.7, z=4)
 rect(ax, 7.6, -0.4, 0.8, 1.4, "#9e9e9e", lw=0.6)
@@ -122,15 +122,15 @@ rect(ax, 4.6, 4.2, 0.6, 2.4, "#78909c", lw=0.6)
 poly(ax, [(4.6, 4.2), (5.2, 4.2), (5.5, 3.6), (4.3, 3.6)], "#78909c", lw=0.6)
 for dx in np.linspace(-0.9, 0.9, 7):
     line(ax, [4.9, 4.9 + dx * 2.2], [3.5, 1.5], color=C["blue"], lw=0.8)
-text(ax, 4.9, 7.1, "약액 / 초순수 노즐", size=9)
+text(ax, 4.9, 7.1, "약액 / 초순수 nozzle", size=9)
 rect(ax, 10.2, 3.2, 1.6, 1.0, "#b39ddb", lw=0.6)
 for yy in (2.9, 2.5, 2.1):
     ax.add_patch(Arc((11.0, yy), 1.4, 0.3, theta1=200, theta2=340, color="#7e57c2", lw=1.0))
-text(ax, 11.0, 4.8, "메가소닉 (MHz 진동)", size=9)
-text(ax, 8.0, 8.4, "웨이퍼마다 새 약액 → 오염 옮김 적음, 균일\n장당 시간이 걸려서 챔버를 여러 개 붙임", size=8.8)
+text(ax, 11.0, 4.8, "megasonic (MHz 진동)", size=9)
+text(ax, 8.0, 8.4, "wafer마다 새 약액 → 오염 옮김 적음, 균일\n장당 시간이 걸려서 chamber를 여러 개 붙임", size=8.8)
 save(f, P, "batch_vs_single")
 
-# 6. 패턴 쓰러짐
+# 6. pattern 쓰러짐
 f, axs = plt.subplots(1, 3, figsize=(13.0, 3.8), gridspec_kw=dict(width_ratios=[1, 1, 1.1]))
 for k, ax in enumerate(axs[:2]):
     canvas(0, 0, (0, 10), (-0.6, 7.2), ax=ax)
@@ -148,7 +148,7 @@ for k, ax in enumerate(axs[:2]):
             arrow(ax, b - 0.75, 2.0, b - 0.15, 2.0, color=C["red"], lw=1.2, ms=8)
         text(ax, 5.0, 6.3, "모세관 힘", size=9.5, color=C["red"])
     else:
-        ax.set_title("결과: 높고 가는 패턴끼리 붙어서 쓰러짐", loc="left", fontsize=10.5)
+        ax.set_title("결과: 높고 가는 pattern끼리 붙어서 쓰러짐", loc="left", fontsize=10.5)
         for x, lean in [(1.2, 0.7), (3.4, -0.7), (5.6, 0.7), (7.8, -0.7)]:
             poly(ax, [(x, 0), (x + 0.9, 0), (x + 0.9 + lean, 5.0), (x + lean, 5.0)], "ox", lw=0.7)
 ax = axs[2]
@@ -164,8 +164,8 @@ ax.grid(alpha=0.25, axis="y")
 plt.tight_layout()
 save(f, P, "pattern_collapse")
 
-# 7. 워터마크
-tt = ["① HF 후 표면은 물을 튕김 (소수성)", "② 물방울 속 O₂ + Si → 실리카가 녹아듦", "③ 마르면 얼룩만 남음 (워터마크)"]
+# 7. watermark
+tt = ["① HF 후 표면은 물을 튕김 (소수성)", "② 물방울 속 O₂ + Si → silica가 녹아듦", "③ 마르면 얼룩만 남음 (watermark)"]
 f, axs = panels(3, 3, 3.6, 2.6, (0, 10), (-1.2, 4.6), titles=tt, size=9.8)
 for k, ax in enumerate(axs):
     rect(ax, 0, -1.2, 10, 1.2, "si", lw=0.5)
@@ -183,5 +183,5 @@ for k, ax in enumerate(axs):
     if k == 2:
         xs = np.linspace(3.6, 6.4, 60)
         ax.fill_between(xs, 0, 0.12 + 0.08 * np.sin((xs - 3.6) * 7), color="#bdbdbd", ec="#333333", lw=0.5, zorder=3)
-        text(ax, 5.0, 1.4, "실리카 얼룩", size=9, color=C["red"], weight="bold")
+        text(ax, 5.0, 1.4, "silica 얼룩", size=9, color=C["red"], weight="bold")
 save(f, P, "watermark")

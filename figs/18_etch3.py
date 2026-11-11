@@ -3,8 +3,8 @@ from common import *
 
 P = 18
 
-# 1. 게이트 식각
-tt = ["① 하드마스크/PR 패턴", "② 메인 식각 (Cl₂, HBr): 수직으로", "③ 종말점 → 과식각 (HBr + O₂)",
+# 1. gate 식각
+tt = ["① hard mask/PR pattern", "② main 식각 (Cl₂, HBr): 수직으로", "③ 종말점 → 과식각 (HBr + O₂)",
       "④ PR 제거"]
 f, axs = panels(4, 4, 3.3, 3.0, (0, 10), (0, 6.6), titles=tt, size=10.5)
 for k, ax in enumerate(axs):
@@ -38,7 +38,7 @@ ax.fill_between(fc, 0, np.clip(bound, 0, 300), color="#ffe0b2", alpha=0.8)
 ax.fill_between(fc, np.clip(bound, 0, 300), 300, color="#e3f2fd", alpha=0.8)
 ax.plot(fc, np.clip(bound, 0, 300), color="#555555", lw=1.4)
 ax.text(1.5, 230, "식각 영역", fontsize=12, color=C["blue"], fontweight="bold")
-ax.text(3.0, 40, "폴리머 증착 영역", fontsize=12, color=C["orange"], fontweight="bold")
+ax.text(3.0, 40, "polymer 증착 영역", fontsize=12, color=C["orange"], fontweight="bold")
 for name, x in [("C₄F₈", 2.0), ("C₃F₈", 2.67), ("C₂F₆", 3.0), ("CF₄", 4.0)]:
     ax.axvline(x, color="#999999", lw=0.7, ls=":")
     ax.text(x, 285, name, ha="center", fontsize=10)
@@ -49,8 +49,8 @@ ax.text(3.65, 178, "O₂ 추가 (C 소모)", ha="center", fontsize=9.5, color=C[
 ax.set_xlim(1.0, 4.2)
 ax.set_ylim(0, 300)
 ax.set_xlabel("F / C 비")
-ax.set_ylabel("이온 에너지 (바이어스, 상대값)")
-ax.set_title("불화탄소 가스: F/C 비와 이온 에너지로 식각 ↔ 증착이 갈림 (개념도)", loc="left", fontsize=11)
+ax.set_ylabel("ion energy (bias, 상대값)")
+ax.set_title("불화탄소 gas: F/C 비와 ion energy로 식각 ↔ 증착이 갈림 (개념도)", loc="left", fontsize=11)
 save(f, P, "fc_ratio")
 
 # 3. OES 종말점 (개념 신호)

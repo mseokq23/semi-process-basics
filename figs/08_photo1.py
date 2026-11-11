@@ -5,7 +5,7 @@ P = 8
 
 
 def base(ax, pr=None, exposed=None, z=2):
-    """Si + 패터닝할 막(SiO₂) + PR"""
+    """Si + patterning할 막(SiO₂) + PR"""
     rect(ax, 0.3, 0.4, 9.4, 1.8, "si", lw=0.7)
     rect(ax, 0.3, 2.2, 9.4, 0.6, "ox", lw=0.7)
     if pr == "full":
@@ -25,9 +25,9 @@ def hotplate(ax):
         ax.plot(x + 0.15 * np.sin(xs * 20), 4.3 + xs * 1.6, color=C["red"], lw=1.0, alpha=0.7, zorder=8)
 
 
-tt = ["① 표면 처리: 탈수 베이크 + HMDS", "② PR 스핀 코팅", "③ 소프트 베이크 (용매 날리기)",
-      "④ 정렬 + 노광", "⑤ PEB (노광 후 베이크)", "⑥ 현상 (양성 PR: 빛 받은 곳 녹음)",
-      "⑦ 하드 베이크", "⑧ 검사 (선폭, 오버레이, 결함)"]
+tt = ["① 표면 처리: 탈수 bake + HMDS", "② PR spin coating", "③ soft bake (용매 날리기)",
+      "④ 정렬 + 노광", "⑤ PEB (노광 후 bake)", "⑥ 현상 (양성 PR: 빛 받은 곳 녹음)",
+      "⑦ hard bake", "⑧ 검사 (선폭, overlay, 결함)"]
 f, axs = panels(8, 4, 3.4, 2.9, (0, 10), (0, 7.4), titles=tt, size=10)
 a = axs
 base(a[0])
@@ -47,7 +47,7 @@ for x0, x1 in [(0.3, 3.0), (4.4, 5.6), (7.0, 9.7)]:
 rect(a[3], 0.3, 5.6, 9.4, 0.35, "none", lw=0.6)
 for x in (3.4, 4.0, 6.0, 6.6):
     arrow(a[3], x, 7.1, x, 3.95, color="#8e44ad", ls="--", ms=8, lw=1.1)
-text(a[3], 9.8, 6.4, "마스크", size=8.8, ha="right")
+text(a[3], 9.8, 6.4, "mask", size=8.8, ha="right")
 base(a[4], "full", exposed=[(3.0, 4.4), (5.6, 7.0)])
 hotplate(a[4])
 base(a[5], "pattern")
@@ -55,7 +55,7 @@ base(a[6], "pattern")
 hotplate(a[6])
 base(a[7], "pattern")
 bracket(a[7], 4.4, 5.6, 4.15, "CD", size=9.5, color=C["blue"])
-text(a[7], 5.0, 6.1, "통과 → 식각 / 이온주입\n불합격 → PR 벗기고 다시 (리워크)", size=8.8)
+text(a[7], 5.0, 6.1, "통과 → 식각 / ion 주입\n불합격 → PR 벗기고 다시 (rework)", size=8.8)
 save(f, P, "photo_steps")
 
 # 2. HMDS: 접촉각
@@ -78,7 +78,7 @@ for k, ax in enumerate(axs):
             text(ax, x, 1.4, "CH₃", size=7.5, color="#555555")
 save(f, P, "hmds")
 
-# 3. 스핀 코팅
+# 3. spin coating
 f, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 4.0), gridspec_kw=dict(width_ratios=[1.1, 1]))
 canvas(0, 0, (0, 12), (0, 7.4), ax=ax1)
 rect(ax1, 5.4, 0.2, 1.2, 1.6, "#9e9e9e", lw=0.6)
@@ -89,7 +89,7 @@ arrow(ax1, 6.0, 4.5, 6.0, 2.5, color="pink", lw=2)
 for sgn in (-1, 1):
     arrow(ax1, 6 + sgn * 4.6, 2.35, 6 + sgn * 5.6, 2.9, color="pink", lw=1.2, ms=8)
 ax1.add_patch(Arc((6.0, 1.0), 3.0, 0.7, theta1=200, theta2=340, color=C["blue"], lw=1.5, zorder=8))
-text(ax1, 6.0, 0.05, "척이 웨이퍼를 진공으로 잡고 회전", size=9)
+text(ax1, 6.0, 0.05, "chuck이 wafer를 진공으로 잡고 회전", size=9)
 text(ax1, 6.0, 7.05, "PR 떨어뜨리기 → 퍼짐 → 남는 건 밖으로 튐 → 용매 증발", size=9.5)
 w = np.linspace(1000, 6000, 200)
 for k, c, lab in [(1.0, PAL[0], "점도 낮은 PR"), (2.2, PAL[1], "점도 높은 PR")]:
@@ -126,13 +126,13 @@ for k, ax in enumerate(axs):
         poly(ax, pts, "pr", lw=0.7)
 save(f, P, "standing_wave")
 
-# 5. 트랙 + 스캐너
+# 5. track + scanner
 f, ax = canvas(11, 4.2, (0, 22), (0, 8.4))
 rect(ax, 0.5, 0.8, 12.5, 6.4, "#f7f7f7", lw=1.0)
-text(ax, 6.75, 7.6, "트랙 (코팅, 베이크, 현상)", size=11, weight="bold")
-mods = [("FOUP\n투입", 1.0, 5.0, "#e0e0e0"), ("HMDS", 3.4, 5.0, "#e8f5e9"), ("코터", 5.8, 5.0, "#fce4ec"),
-        ("소프트\n베이크", 8.2, 5.0, "#ffebee"), ("PEB", 8.2, 1.4, "#ffebee"), ("현상", 5.8, 1.4, "#ede7f6"),
-        ("하드\n베이크", 3.4, 1.4, "#ffebee"), ("FOUP\n회수", 1.0, 1.4, "#e0e0e0")]
+text(ax, 6.75, 7.6, "track (coating, bake, 현상)", size=11, weight="bold")
+mods = [("FOUP\n투입", 1.0, 5.0, "#e0e0e0"), ("HMDS", 3.4, 5.0, "#e8f5e9"), ("coater", 5.8, 5.0, "#fce4ec"),
+        ("soft\nbake", 8.2, 5.0, "#ffebee"), ("PEB", 8.2, 1.4, "#ffebee"), ("현상", 5.8, 1.4, "#ede7f6"),
+        ("hard\nbake", 3.4, 1.4, "#ffebee"), ("FOUP\n회수", 1.0, 1.4, "#e0e0e0")]
 for s, x, y, c in mods:
     box(ax, x, y, 2.0, 1.6, s, fc=c, size=9.5)
 order = [0, 1, 2, 3]
@@ -140,7 +140,7 @@ for i in range(3):
     arrow(ax, mods[i][1] + 2.05, 5.8, mods[i + 1][1] - 0.05, 5.8, lw=1.1, ms=9)
 for i in range(4, 7):
     arrow(ax, mods[i][1] - 0.05, 2.2, mods[i + 1][1] + 2.05, 2.2, lw=1.1, ms=9)
-box(ax, 15.0, 1.8, 6.4, 4.6, "스캐너 (노광기)", fc="#e3f2fd", size=11, weight="bold")
+box(ax, 15.0, 1.8, 6.4, 4.6, "scanner (노광기)", fc="#e3f2fd", size=11, weight="bold")
 arrow(ax, 10.25, 5.8, 15.0, 5.0, lw=1.3, color="blue")
 arrow(ax, 15.0, 3.0, 10.25, 2.2, lw=1.3, color="blue")
 text(ax, 12.6, 6.0, "노광하러", size=9, color=C["blue"])

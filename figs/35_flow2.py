@@ -30,16 +30,16 @@ f, ax = canvas(13.6, 7.0, (-9.0, 33.5), (-5.6, 8.4))
 cmos.draw(ax, dict(cmos.FINAL), size=8.5)
 L = [((0.5, -0.9), (-8.7, -1.0), "STI\n7, 17, 23, 32편"),
      ((2.5, -3.0), (-8.7, -3.6), "P-well / N-well\n26 ~ 28편"),
-     ((2.0, -0.45), (-8.7, 1.2), "n⁺ 소스 / 드레인\n26 ~ 28편"),
+     ((2.0, -0.45), (-8.7, 1.2), "n⁺ source / drain\n26 ~ 28편"),
      ((5.05, -0.18), (-8.7, 3.3), "LDD\n26편"),
-     ((5.7, 0.05), (-8.7, 5.4), "게이트 산화막\n6 ~ 7편"),
+     ((5.7, 0.05), (-8.7, 5.4), "gate 산화막\n6 ~ 7편"),
      ((12.0, 6.3), (-8.7, 7.4), "보호막 (SiN)\n20편"),
-     ((17.0, 0.9), (25.6, 1.0), "poly 게이트\n22, 18편"),
-     ((18.85, 0.5), (25.6, -1.2), "스페이서\n20, 18편"),
-     ((19.6, -0.06), (25.6, 3.0), "실리사이드\n29편"),
-     ((20.5, -0.45), (25.6, -3.3), "p⁺ 소스 / 드레인\n26 ~ 28편"),
-     ((15.0, 1.6), (25.6, 5.0), "W 플러그 + PMD\n23, 30, 32편"),
-     ((13.5, 4.6), (25.6, 7.2), "Cu 배선, 비아 + Low-k\n31, 32편")]
+     ((17.0, 0.9), (25.6, 1.0), "poly gate\n22, 18편"),
+     ((18.85, 0.5), (25.6, -1.2), "spacer\n20, 18편"),
+     ((19.6, -0.06), (25.6, 3.0), "silicide\n29편"),
+     ((20.5, -0.45), (25.6, -3.3), "p⁺ source / drain\n26 ~ 28편"),
+     ((15.0, 1.6), (25.6, 5.0), "W plug + PMD\n23, 30, 32편"),
+     ((13.5, 4.6), (25.6, 7.2), "Cu 배선, via + Low-k\n31, 32편")]
 for (px, py), (tx, ty), s in L:
     text(ax, tx, ty, s, size=8.8, ha="left", box="#fff8e1")
     x_end = tx + 6.6 if tx < 0 else tx - 0.2
@@ -48,12 +48,12 @@ text(ax, 6.0, -4.75, "NMOS", size=11, weight="bold")
 text(ax, 18.0, -4.75, "PMOS", size=11, weight="bold")
 save(f, P, "final_labeled")
 
-# 3. 인버터 회로와 전달 특성
+# 3. inverter 회로와 전달 특성
 f, (ax1, ax2) = plt.subplots(1, 2, figsize=(11.6, 4.2), gridspec_kw=dict(width_ratios=[0.9, 1.1]))
 canvas(0, 0, (0, 10), (0, 10), ax=ax1)
 ax1.set_title("회로: 단면의 각 부분이 어디에 해당하는지", loc="left", fontsize=10.5)
 line(ax1, [5, 5], [9.3, 7.6], lw=1.6)
-text(ax1, 5, 9.65, "VDD (PMOS 소스, 오른쪽 M1)", size=9)
+text(ax1, 5, 9.65, "VDD (PMOS source, 오른쪽 M1)", size=9)
 # PMOS
 line(ax1, [5, 5], [7.6, 7.0], lw=1.6)
 line(ax1, [5, 5.0], [7.0, 7.0], lw=1.6)
@@ -75,17 +75,17 @@ text(ax1, 6.3, 3.3, "NMOS (P-well)", size=9.5, ha="left")
 line(ax1, [5, 5], [1.6, 0.9], lw=1.6)
 line(ax1, [4.3, 5.7], [0.9, 0.9], lw=1.6)
 line(ax1, [4.6, 5.4], [0.6, 0.6], lw=1.6)
-text(ax1, 5, 0.2, "GND (NMOS 소스, 왼쪽 M1)", size=9)
+text(ax1, 5, 0.2, "GND (NMOS source, 왼쪽 M1)", size=9)
 # 입력, 출력
 line(ax1, [3.95, 3.0, 3.0, 4.25], [6.3, 6.3, 3.3, 3.3], lw=1.6)
 line(ax1, [2.0, 3.0], [4.8, 4.8], lw=1.6)
 circ(ax1, 3.0, 4.8, 0.08, "#222222", lw=0.5)
 text(ax1, 1.6, 4.8, "IN", size=10.5, weight="bold", ha="right")
-text(ax1, 1.6, 4.1, "(poly 게이트)", size=8.6, ha="right")
+text(ax1, 1.6, 4.1, "(poly gate)", size=8.6, ha="right")
 line(ax1, [5.0, 7.6], [5.0, 5.0], lw=1.6)
 circ(ax1, 5.0, 5.0, 0.08, "#222222", lw=0.5)
 text(ax1, 7.8, 5.0, "OUT", size=10.5, weight="bold", ha="left")
-text(ax1, 7.8, 4.3, "(두 드레인 + 가운데 M1)", size=8.6, ha="left")
+text(ax1, 7.8, 4.3, "(두 drain + 가운데 M1)", size=8.6, ha="left")
 # 전달 특성
 VDD, VTN, VTP, KN, KP, LAM = 3.3, 0.7, -0.7, 1.0, 1.0, 0.05
 
@@ -123,7 +123,7 @@ ax2.plot(vin, vout, color=PAL[0], lw=2.4)
 ax2.plot([0, VDD], [0, VDD], ":", color="#999999", lw=1.0)
 ax2.set_xlabel("입력 전압 (V)")
 ax2.set_ylabel("출력 전압 (V)")
-ax2.set_title("전달 특성: 입력 0 → 출력 VDD, 입력 VDD → 출력 0 (단순 모델)", loc="left", fontsize=10.5)
+ax2.set_title("전달 특성: 입력 0 → 출력 VDD, 입력 VDD → 출력 0 (단순 model)", loc="left", fontsize=10.5)
 ax2.text(0.15, 2.85, "NMOS 꺼짐\nPMOS 켜짐", fontsize=9)
 ax2.text(2.35, 0.35, "NMOS 켜짐\nPMOS 꺼짐", fontsize=9)
 ax2.grid(alpha=0.25)

@@ -43,7 +43,7 @@ def trench(ax, kind):
                   (0.3, 5.0)], "al", lw=0.6, z=6)
 
 
-tt = ["좋음: 고르게 덮임 (conformal)", "나쁨: 측벽, 바닥이 얇음", "오버행: 입구가 먼저 두꺼워짐"]
+tt = ["좋음: 고르게 덮임 (conformal)", "나쁨: 측벽, 바닥이 얇음", "overhang: 입구가 먼저 두꺼워짐"]
 f, axs = panels(3, 3, 3.8, 3.0, (0, 10), (0, 6.2), titles=tt, size=10.5)
 for ax, k in zip(axs, ("conf", "poor", "over")):
     trench(ax, k)
@@ -54,8 +54,8 @@ text(ax, 5.0, 3.6, "측벽\nt_side", size=8.6)
 plt.suptitle("단차 피복성 = 측벽(또는 바닥) 두께 / 윗면 두께", fontsize=11.5, y=1.03)
 save(f, P, "step_coverage")
 
-# 3. 갭필 불량
-tt = ["보이드 (빈 공간)", "심 (가운데 이음선)", "정상"]
+# 3. gap fill 불량
+tt = ["void (빈 공간)", "seam (가운데 이음선)", "정상"]
 f, axs = panels(3, 3, 3.6, 3.2, (0, 10), (0, 6.4), titles=tt, size=11)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 0.8, "si", lw=0.6)
@@ -87,7 +87,7 @@ for k, ax in enumerate(axs):
 text(axs[0], 0, -1.6, "(휘어짐은 과장해서 그림)", size=8.8, color="#666666")
 save(f, P, "stress")
 
-# 5. 박막 성장 모드
+# 5. 박막 성장 mode
 tt = ["층 단위 성장 (FM)", "섬 성장 (VW)", "층 + 섬 (SK)"]
 f, axs = panels(3, 3, 3.6, 2.4, (0, 10), (0, 4.4), titles=tt, size=11)
 for k, ax in enumerate(axs):
@@ -131,7 +131,7 @@ bounce(axs[1], False)
 save(f, P, "sticking")
 
 # 7. PVD / CVD / ALD 피복성 비교
-tt = ["PVD (스퍼터)", "CVD", "ALD"]
+tt = ["PVD (sputter)", "CVD", "ALD"]
 f, axs = panels(3, 3, 3.4, 3.4, (0, 10), (0, 7.2), titles=tt, size=11)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 0.8, "ox", lw=0.6)

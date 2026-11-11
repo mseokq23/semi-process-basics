@@ -4,28 +4,28 @@ from cmos import conformal
 
 P = 23
 
-# 1. PECVD 챔버
+# 1. PECVD chamber
 f, ax = canvas(8.4, 5.4, (0, 16), (0, 10.2))
 rect(ax, 0.8, 0.8, 14.4, 8.4, "#fafafa", lw=1.2)
 rect(ax, 2.5, 7.0, 11.0, 0.7, "#b0bec5", lw=0.8)
 for x in np.arange(3.0, 13.2, 0.6):
     line(ax, [x, x], [7.0, 6.6], color="#78909c", lw=1.0)
-text(ax, 8.0, 7.35, "샤워헤드 (가스 분사 + RF 전극)", size=9.5)
+text(ax, 8.0, 7.35, "showerhead (gas 분사 + RF 전극)", size=9.5)
 arrow(ax, 8.0, 9.9, 8.0, 7.8, color="blue", lw=1.4)
 text(ax, 8.3, 9.5, "SiH₄ + NH₃ / N₂O, TEOS + O₂ ...", size=9, ha="left", color=C["blue"])
 ax.add_patch(Ellipse((8.0, 4.9), 11.0, 2.6, fc="#e1bee7", ec="none", alpha=0.85, zorder=3))
-text(ax, 8.0, 4.9, "플라즈마: 낮은 온도에서도 전구체를 분해", size=9.5, z=21)
+text(ax, 8.0, 4.9, "plasma: 낮은 온도에서도 전구체를 분해", size=9.5, z=21)
 rect(ax, 3.0, 2.4, 10.0, 0.9, "#ef9a9a", lw=0.8)
 rect(ax, 4.0, 3.3, 8.0, 0.2, "si", lw=0.5)
-text(ax, 8.0, 2.85, "히터 받침대 (200 ~ 400 °C)", size=9.5)
+text(ax, 8.0, 2.85, "heater 받침대 (200 ~ 400 °C)", size=9.5)
 rect(ax, 0.0, 7.1, 1.6, 0.6, "#fff3e0", lw=0.6)
 text(ax, 0.8, 7.4, "RF", size=9)
 arrow(ax, 15.2, 1.6, 16.0, 1.6, lw=1.2)
 text(ax, 15.9, 2.1, "배기", size=9, ha="right")
 save(f, P, "pecvd_chamber")
 
-# 2. 갭필이 막히는 과정
-tt = ["① 증착 시작", "② 입구 모서리가 더 빨리 두꺼워짐", "③ 입구가 먼저 맞붙음", "④ 안에 빈 공간 (보이드)"]
+# 2. gap fill이 막히는 과정
+tt = ["① 증착 시작", "② 입구 모서리가 더 빨리 두꺼워짐", "③ 입구가 먼저 맞붙음", "④ 안에 빈 공간 (void)"]
 f, axs = panels(4, 4, 3.0, 3.2, (0, 10), (0, 6.8), titles=tt, size=9.8)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 0.8, "si", lw=0.6)
@@ -44,7 +44,7 @@ for k, ax in enumerate(axs):
 save(f, P, "gapfill_steps")
 
 # 3. HDP-CVD
-tt = ["증착 + 동시에 스퍼터 식각", "모서리가 깎여서 입구가 안 막힘", "바닥부터 차오름 (bottom-up)"]
+tt = ["증착 + 동시에 sputter 식각", "모서리가 깎여서 입구가 안 막힘", "바닥부터 차오름 (bottom-up)"]
 f, axs = panels(3, 3, 3.6, 3.6, (0, 10), (-0.9, 7.0), titles=tt, size=10.2)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 0.8, "si", lw=0.6)

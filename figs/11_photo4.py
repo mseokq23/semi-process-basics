@@ -21,8 +21,8 @@ def aerial(pitch, cutoff=1.0, duty=0.5, n=4096, periods=4, phase=False):
 if __name__ == "__main__":
     # 1. 회절과 NA
     f, axs = panels(2, 2, 5.6, 5.0, (0, 10), (0, 10),
-                    titles=["피치가 클 때: ±1차가 렌즈 안으로 → 패턴이 맺힘",
-                            "피치가 작을 때: ±1차가 렌즈 밖 → 0차만 → 패턴 없음"], size=10.5)
+                    titles=["pitch가 클 때: ±1차가 lens 안으로 → pattern이 맺힘",
+                            "pitch가 작을 때: ±1차가 lens 밖 → 0차만 → pattern 없음"], size=10.5)
     for k, ax in enumerate(axs):
         pitch = 1.0 if k == 0 else 0.5
         rect(ax, 1.0, 8.4, 8.0, 0.25, "#e3f2fd", lw=0.6)
@@ -44,13 +44,13 @@ if __name__ == "__main__":
             if m != 0:
                 text(ax, 5.0 + np.tan(m * ang) * 1.3 + 0.35 * m, 7.3, f"{m:+d}차", size=9.5, color=col)
         text(ax, 5.0, 7.3, "0차", size=9.5, color="#8e44ad")
-        text(ax, 5.0, 9.4, "마스크 (피치 p)", size=9.5)
-        text(ax, 8.6, 5.0, "렌즈", size=9.5, ha="left")
-    text(axs[0], 5.0, 0.05, "sinθ = λ / p : 피치가 작을수록 크게 꺾임", size=9.5, va="bottom")
-    text(axs[1], 5.0, 0.05, "렌즈가 받을 수 있는 최대 각도 = NA", size=9.5, va="bottom")
+        text(ax, 5.0, 9.4, "mask (pitch p)", size=9.5)
+        text(ax, 8.6, 5.0, "lens", size=9.5, ha="left")
+    text(axs[0], 5.0, 0.05, "sinθ = λ / p : pitch가 작을수록 크게 꺾임", size=9.5, va="bottom")
+    text(axs[1], 5.0, 0.05, "lens가 받을 수 있는 최대 각도 = NA", size=9.5, va="bottom")
     save(f, P, "diffraction_na")
 
-    # 2. 피치에 따른 공중 이미지
+    # 2. pitch에 따른 공중 image
     f, axs = plt.subplots(1, 3, figsize=(13.5, 3.6), sharey=True)
     for ax, p in zip(axs, (3.5, 1.4, 0.9)):
         x, m, E = aerial(p)
@@ -58,13 +58,13 @@ if __name__ == "__main__":
         for k in range(4):
             ax.axvspan(k * p, k * p + p / 2, color="#e3f2fd", zorder=0)
         ax.plot(x, I, color=PAL[1], lw=2)
-        ax.set_title(f"피치 = {p} × λ/NA", loc="left", fontsize=11)
+        ax.set_title(f"pitch = {p} × λ/NA", loc="left", fontsize=11)
         ax.set_xlabel("위치 (λ/NA 단위)")
         ax.set_ylim(0, 1.25)
         ax.grid(alpha=0.25)
     axs[0].set_ylabel("빛 세기")
-    axs[2].text(1.8, 0.6, "0차만 통과\n→ 세기가 평평\n(패턴 없음)", ha="center", fontsize=10, color=PAL[1])
-    plt.suptitle("파란 띠 = 마스크에서 빛이 통과하는 곳, 빨간 선 = 웨이퍼에 맺히는 빛 (결맞음 조명 계산)",
+    axs[2].text(1.8, 0.6, "0차만 통과\n→ 세기가 평평\n(pattern 없음)", ha="center", fontsize=10, color=PAL[1])
+    plt.suptitle("파란 띠 = mask에서 빛이 통과하는 곳, 빨간 선 = wafer에 맺히는 빛 (결맞음 조명 계산)",
                  fontsize=10.5, y=1.02)
     plt.tight_layout()
     save(f, P, "aerial_pitch")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     ax1.axhspan(3.4, 4.6, xmin=0.05, xmax=0.95, color="#c8e6c9", alpha=0.6)
     vdim(ax1, 8.6, 3.4, 4.6, "DoF", size=10)
     rect(ax1, 0.8, 3.55, 3.0, 0.5, "pr", lw=0.5)
-    text(ax1, 2.3, 3.0, "PR 두께 + 웨이퍼 단차가\n이 범위 안에 들어와야 함", size=9)
+    text(ax1, 2.3, 3.0, "PR 두께 + wafer 단차가\n이 범위 안에 들어와야 함", size=9)
     canvas(0, 0, (0, 10), (0, 9), ax=ax1)
     NA = np.linspace(0.5, 1.0, 100)
     lam = 193
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     save(f, P, "dof")
 
-    # 5. Bossung 곡선, 공정 창 (개념 모델)
+    # 5. Bossung 곡선, 공정 창 (개념 model)
     fz = np.linspace(-0.16, 0.16, 161)
     Es = np.linspace(21, 29, 161)
 

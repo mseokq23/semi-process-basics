@@ -39,9 +39,9 @@ C = dict(
     gray="#888888", orange="#e69138", purple="#7b5ea7", light="#f4f4f4",
 )
 NAME = dict(si="Si", ox="SiO₂", nit="Si₃N₄", pr="PR", poly="poly-Si", al="Al", cu="Cu",
-            w="W", tin="Ti/TiN", sil="실리사이드", np="n⁺", pp="p⁺", nl="n⁻ (LDD)",
+            w="W", tin="Ti/TiN", sil="silicide", np="n⁺", pp="p⁺", nl="n⁻ (LDD)",
             pl="p⁻ (LDD)", nw="N-well", pw="P-well", lowk="Low-k", hk="High-k",
-            epi="에피층", box="BOX (SiO₂)")
+            epi="epi층", box="BOX (SiO₂)")
 PAL = ["#2f6fb0", "#d9534f", "#3c8d40", "#e69138", "#7b5ea7", "#555555", "#17a2b8"]
 EC = "#333333"
 
@@ -136,7 +136,7 @@ def legend(ax, keys, loc="upper right", ncol=1, size=9, bbox=None, names=None):
 
 
 def ions(ax, xs, y0, y1, color="ink", lw=1.1, ms=8):
-    """위에서 내려오는 이온 화살표 여러 개"""
+    """위에서 내려오는 ion 화살표 여러 개"""
     for x in xs:
         arrow(ax, x, y0, x, y1, color=color, lw=lw, ms=ms)
 
@@ -158,7 +158,7 @@ def save(f, post, name):
 
 
 def wafer_top(ax, cx, cy, r, c="si", notch=True, flats=None, lw=1.0, z=2):
-    """웨이퍼 윗면. flats = [(각도deg, 깊이비), ...]"""
+    """wafer 윗면. flats = [(각도deg, 깊이비), ...]"""
     t = np.linspace(0, 2 * np.pi, 721)
     x = cx + r * np.cos(t)
     y = cy + r * np.sin(t)

@@ -4,7 +4,7 @@ from common import *
 P = 16
 
 # 1. 식각 기본 순서
-tt = ["① 포토 끝난 상태", "② 식각: PR 없는 곳의 막 제거", "③ 과식각: 남은 막을 확실히 제거", "④ PR 제거 (애싱 + 세정)"]
+tt = ["① photo 끝난 상태", "② 식각: PR 없는 곳의 막 제거", "③ 과식각: 남은 막을 확실히 제거", "④ PR 제거 (ashing + 세정)"]
 f, axs = panels(4, 4, 3.2, 2.6, (0, 10), (0, 5.4), titles=tt, size=10.5)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 1.6, "si", lw=0.6)
@@ -31,7 +31,7 @@ for k, ax in enumerate(axs):
 save(f, P, "etch_flow")
 
 # 2. 등방성 / 이방성
-f, axs = panels(3, 3, 3.8, 3.3, (0, 10), (0, 6.8), titles=["등방성 (습식, 라디칼)", "이방성 (RIE)", "중간 (경사 측벽)"],
+f, axs = panels(3, 3, 3.8, 3.3, (0, 10), (0, 6.8), titles=["등방성 (습식, radical)", "이방성 (RIE)", "중간 (경사 측벽)"],
                 size=11)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 9.4, 1.4, "si", lw=0.6)
@@ -44,7 +44,7 @@ for k, ax in enumerate(axs):
              "ox", lw=0.6)
         rect(ax, 0.3, 3.7, 3.3, 0.8, "pr", lw=0.6)
         rect(ax, 6.4, 3.7, 3.3, 0.8, "pr", lw=0.6)
-        bracket(ax, 1.6, 3.6, 4.7, "언더컷", size=9, color=C["red"])
+        bracket(ax, 1.6, 3.6, 4.7, "undercut", size=9, color=C["red"])
     elif k == 1:
         rect(ax, 0.3, 1.7, 3.3, 2.0, "ox", lw=0.6)
         rect(ax, 6.4, 1.7, 3.3, 2.0, "ox", lw=0.6)
@@ -56,7 +56,7 @@ for k, ax in enumerate(axs):
         rect(ax, 0.3, 3.7, 3.3, 0.8, "pr", lw=0.6)
         rect(ax, 6.4, 3.7, 3.3, 0.8, "pr", lw=0.6)
 text(axs[0], 5.0, 6.35, "옆으로도 같은 속도로 깎임", size=9)
-text(axs[1], 5.0, 6.35, "아래로만 깎임 → 미세 패턴에 필수", size=9)
+text(axs[1], 5.0, 6.35, "아래로만 깎임 → 미세 pattern에 필수", size=9)
 text(axs[2], 5.0, 6.35, "측벽 보호막이 조금 많을 때", size=9)
 save(f, P, "iso_aniso")
 
@@ -115,7 +115,7 @@ for k, ax in enumerate(axs):
     ax.add_patch(Arc((b, 4.4), 1.6, 1.6, theta1=180 + 0, theta2=180 + 54.74, color=C["red"], lw=1.2, zorder=8))
     text(ax, b - 1.2, 4.0, "54.7°", size=9.5, color=C["red"])
 text(axs[0], 5.0, 5.6, "(111)면은 거의 안 깎여서 멈춤", size=9.5)
-text(axs[1], 5.0, 5.6, "(100) 웨이퍼, KOH / TMAH", size=9.5)
+text(axs[1], 5.0, 5.6, "(100) wafer, KOH / TMAH", size=9.5)
 save(f, P, "koh")
 
 # 6. 균일도 지도

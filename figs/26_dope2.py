@@ -3,9 +3,9 @@ from common import *
 
 P = 26
 
-# 1. 이온주입기 구성
+# 1. ion 주입기 구성
 f, ax = canvas(12, 5.0, (0, 24), (-0.6, 10))
-box(ax, 0.4, 6.6, 3.2, 2.4, "이온 소스\n(BF₃, PH₃, AsH₃\n → 플라즈마)", fc="#fff3e0", size=9.2)
+box(ax, 0.4, 6.6, 3.2, 2.4, "ion source\n(BF₃, PH₃, AsH₃\n → plasma)", fc="#fff3e0", size=9.2)
 r = 2.4
 cx, cy = 5.0, 7.8 - r
 ax.add_patch(Wedge((cx, cy), r + 0.75, 0, 90, width=1.5, fc="#cfd8dc", ec="#555555", lw=0.8))
@@ -16,19 +16,19 @@ ex = cx + r
 line(ax, [ex, ex], [cy, 2.3], color=C["red"], lw=2.0)
 rect(ax, ex - 0.95, 3.7, 0.7, 0.35, "#424242", lw=0)
 rect(ax, ex + 0.25, 3.7, 0.7, 0.35, "#424242", lw=0)
-text(ax, ex + 1.1, 3.85, "분해능 슬릿 (원하는 질량만)", size=9, ha="left")
+text(ax, ex + 1.1, 3.85, "분해능 slit (원하는 질량만)", size=9, ha="left")
 ax.add_patch(Arc((ex + 0.8, 2.3), 1.6, 1.4, theta1=180, theta2=270, color=C["red"], lw=2.0, zorder=6))
 line(ax, [ex + 0.8, 10.6], [1.6, 1.6], color=C["red"], lw=2.0)
-box(ax, 10.6, 0.6, 3.6, 2.0, "가속관\n(에너지 결정)", fc="#e3f2fd", size=9.5)
+box(ax, 10.6, 0.6, 3.6, 2.0, "가속관\n(energy 결정)", fc="#e3f2fd", size=9.5)
 line(ax, [14.2, 16.0], [1.6, 1.6], color=C["red"], lw=2.0)
-box(ax, 16.0, 0.6, 2.8, 2.0, "빔 스캔", fc="#ede7f6", size=9.5)
+box(ax, 16.0, 0.6, 2.8, 2.0, "beam scan", fc="#ede7f6", size=9.5)
 for a_ in (-12, 0, 12):
     line(ax, [18.8, 21.4], [1.6, 1.6 + 2.6 * np.tan(np.deg2rad(a_))], color=C["red"], lw=1.2)
 rect(ax, 21.4, 0.0, 0.35, 3.4, "si", lw=0.6)
-text(ax, 21.6, 3.9, "웨이퍼", size=9.5)
+text(ax, 21.6, 3.9, "wafer", size=9.5)
 rect(ax, 22.3, 0.6, 1.2, 2.0, "#ffe0b2", lw=0.6)
-text(ax, 22.9, 0.1, "패러데이 컵\n(전류로 도즈 측정)", size=8.5, va="top")
-text(ax, 16.5, 7.4, "도즈 = ∫ I dt / (q × 면적)\n에너지 = 전하 × 가속 전압", size=10, box="#fff8e1")
+text(ax, 22.9, 0.1, "Faraday cup\n(전류로 dose 측정)", size=8.5, va="top")
+text(ax, 16.5, 7.4, "dose = ∫ I dt / (q × 면적)\nenergy = 전하 × 가속 전압", size=10, box="#fff8e1")
 save(f, P, "implanter")
 
 # 2. 질량 분석
@@ -54,12 +54,12 @@ for m, c, s in [(10, PAL[0], "¹⁰B⁺"), (11, PAL[1], "¹¹B⁺"), (19, PAL[3]
         text(ax, xs[-1] - 0.35, -6.55, "×", size=13, color=C["red"], weight="bold")
 rect(ax, r11 - 1.4, -7.2, 1.32, 0.4, "#424242", lw=0)
 rect(ax, r11 + 0.08, -7.2, 1.32, 0.4, "#424242", lw=0)
-text(ax, r11, -8.3, "슬릿: ¹¹B⁺만 통과", size=9.5)
+text(ax, r11, -8.3, "slit: ¹¹B⁺만 통과", size=9.5)
 ax.legend(fontsize=9, loc="lower left")
 text(ax, 3.9, 1.2, "같은 전압으로 가속 → 무거울수록 크게 돎 (반지름 ∝ 질량의 제곱근)", size=9.2)
 save(f, P, "mass_analysis")
 
-# 3. 채널링
+# 3. channeling
 f, axs = plt.subplots(1, 3, figsize=(13.5, 4.0), gridspec_kw=dict(width_ratios=[1, 1, 1.3]))
 for k, ax in enumerate(axs[:2]):
     canvas(0, 0, (-0.5, 8.5), (-0.5, 8.5), ax=ax)
@@ -77,20 +77,20 @@ for k, ax in enumerate(axs[:2]):
 x = np.linspace(0, 400, 400)
 g = 1e19 * np.exp(-(x - 100) ** 2 / (2 * 37 ** 2))
 tail = 3e17 * np.exp(-x / 70) * (x > 60)
-axs[2].semilogy(x, g + 1e14, color=PAL[0], lw=2, label="기울여서 주입 (거의 가우시안)")
-axs[2].semilogy(x, g + tail + 1e14, "--", color=PAL[1], lw=2, label="채널링 꼬리")
+axs[2].semilogy(x, g + 1e14, color=PAL[0], lw=2, label="기울여서 주입 (거의 Gaussian)")
+axs[2].semilogy(x, g + tail + 1e14, "--", color=PAL[1], lw=2, label="channeling 꼬리")
 axs[2].set_ylim(1e15, 3e19)
 axs[2].set_xlabel("깊이 (nm)")
 axs[2].set_ylabel("농도 (cm⁻³)")
-axs[2].set_title("채널링이 있으면 꼬리가 길어져 접합이 깊어짐 (개념)", fontsize=10.2, loc="left")
+axs[2].set_title("channeling이 있으면 꼬리가 길어져 접합이 깊어짐 (개념)", fontsize=10.2, loc="left")
 axs[2].legend(fontsize=8.8)
 axs[2].grid(alpha=0.25)
 plt.tight_layout()
 save(f, P, "channeling")
 
-# 4. 섀도잉
-f, axs = panels(2, 2, 5.6, 3.6, (0, 12), (0, 7.4), titles=["기울여 주입하면 게이트 한쪽에 그림자",
-                                                         "웨이퍼를 90°씩 돌려 4번 (쿼드 주입)"], size=10.5)
+# 4. shadowing
+f, axs = panels(2, 2, 5.6, 3.6, (0, 12), (0, 7.4), titles=["기울여 주입하면 gate 한쪽에 그림자",
+                                                         "wafer를 90°씩 돌려 4번 (quad 주입)"], size=10.5)
 for k, ax in enumerate(axs):
     rect(ax, 0.3, 0.3, 11.4, 3.0, "pw", lw=0.6)
     rect(ax, 4.8, 3.3, 2.4, 0.15, "ox", lw=0.4)
@@ -111,12 +111,12 @@ for k, ax in enumerate(axs):
         text(ax, 6.0, 1.5, "양쪽이 대칭이 됨", size=9.5)
 save(f, P, "shadowing")
 
-# 5. 용도별 도즈-에너지 지도
-items = [("레트로그레이드 웰", 200, 1500, 5e12, 5e13), ("웰", 80, 200, 5e12, 3e13), ("할로 / 펀치스루", 10, 80, 5e12, 5e13),
-         ("Vt 조절", 5, 50, 5e11, 1e13), ("LDD", 2, 20, 5e13, 5e14), ("소스 / 드레인", 1, 30, 1e15, 6e15),
-         ("PAI (Ge, 비정질화)", 10, 50, 1e14, 1e15), ("poly 게이트 도핑", 5, 30, 1e15, 1e16)]
+# 5. 용도별 dose-energy 지도
+items = [("retrograde well", 200, 1500, 5e12, 5e13), ("well", 80, 200, 5e12, 3e13), ("halo / punch-through", 10, 80, 5e12, 5e13),
+         ("Vt 조절", 5, 50, 5e11, 1e13), ("LDD", 2, 20, 5e13, 5e14), ("source / drain", 1, 30, 1e15, 6e15),
+         ("PAI (Ge, 비정질화)", 10, 50, 1e14, 1e15), ("poly gate doping", 5, 30, 1e15, 1e16)]
 f, ax = plot_ax(8.4, 5.0)
-lab_pos = {"소스 / 드레인": (2.2, 2.2e15), "poly 게이트 도핑": (14, 7e15)}
+lab_pos = {"source / drain": (2.2, 2.2e15), "poly gate doping": (14, 7e15)}
 for (s, e0, e1, d0, d1), c in zip(items, PAL + PAL):
     ax.add_patch(Rectangle((e0, d0), e1 - e0, d1 - d0, fc=c, alpha=0.3, ec=c, lw=1.4))
     lx, ly = lab_pos.get(s, (np.sqrt(e0 * e1), np.sqrt(d0 * d1)))
@@ -125,7 +125,7 @@ ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(0.7, 2000)
 ax.set_ylim(2e11, 3e16)
-ax.set_xlabel("에너지 (keV)")
-ax.set_ylabel("도즈 (ions/cm²)")
+ax.set_xlabel("energy (keV)")
+ax.set_ylabel("dose (ions/cm²)")
 ax.set_title("CMOS 공정에서 쓰는 주입 조건 (대략적인 범위)", loc="left")
 save(f, P, "dose_energy")

@@ -113,7 +113,7 @@ if __name__ == "__main__":
     rect(ax, 0.5, 0, 15, 2.6, "si", lw=0.8)
     rect(ax, 0.5, 2.6, 15, 3.4, "ox", lw=0.8)
     rect(ax, 0.5, 6.0, 15, 1.4, "poly", lw=0.8)
-    text(ax, 8.0, 6.7, "게이트", size=10)
+    text(ax, 8.0, 6.7, "gate", size=10)
     text(ax, 8.0, 1.0, "Si", size=10)
     rng = np.random.default_rng(5)
     for x, y in zip(rng.uniform(1.2, 4.5, 6), rng.uniform(3.3, 5.5, 6)):
@@ -124,15 +124,15 @@ if __name__ == "__main__":
         text(ax, x, 2.95, "+", size=11, color=C["blue"], weight="bold")
     for x in np.arange(13.0, 15.3, 0.45):
         text(ax, x, 2.6, "×", size=11, color=C["green"], weight="bold")
-    for (x, s, c) in [(2.8, "Qm 이동 이온\n(Na⁺, K⁺)", "red"), (7.2, "Qot 산화막에\n갇힌 전하", "purple"),
-                      (11.3, "Qf 계면 근처\n고정 전하", "blue"), (14.2, "Qit 계면\n트랩", "green")]:
+    for (x, s, c) in [(2.8, "Qm 이동 ion\n(Na⁺, K⁺)", "red"), (7.2, "Qot 산화막에\n갇힌 전하", "purple"),
+                      (11.3, "Qf 계면 근처\n고정 전하", "blue"), (14.2, "Qit 계면\ntrap", "green")]:
         text(ax, x, -0.25, s, size=9, color=C[c], va="top")
     f.subplots_adjust(bottom=0.25)
     save(f, P, "oxide_charges")
 
     # 5. LOCOS vs STI
     f, axs = panels(2, 2, 6.0, 3.6, (0, 12), (-2.8, 3.4),
-                    titles=["LOCOS: 질화막 밑으로 산화막이 파고듦 (버즈비크)", "STI: 홈을 파고 산화막으로 채움"],
+                    titles=["LOCOS: 질화막 밑으로 산화막이 파고듦 (bird's beak)", "STI: 홈을 파고 산화막으로 채움"],
                     size=10.5)
     ax = axs[0]
     rect(ax, 0, -2.6, 12, 2.6, "si", lw=0.8)
@@ -147,9 +147,9 @@ if __name__ == "__main__":
     rect(ax, 9.4, 0, 2.6, 0.12, "ox", lw=0.5)
     poly(ax, [(0, 0.12), (2.6, 0.12), (3.1, 0.6), (3.1, 1.1), (2.6, 0.72), (0, 0.72)], "nit", lw=0.7, z=4)
     poly(ax, [(12, 0.12), (9.4, 0.12), (8.9, 0.6), (8.9, 1.1), (9.4, 0.72), (12, 0.72)], "nit", lw=0.7, z=4)
-    text(ax, 6.0, 0.2, "필드 산화막", size=9.5)
+    text(ax, 6.0, 0.2, "field 산화막", size=9.5)
     arrow(ax, 2.3, 2.4, 2.75, 0.3, lw=0.8, ms=7)
-    text(ax, 2.3, 2.7, "버즈비크 (새 부리)", size=9)
+    text(ax, 2.3, 2.7, "bird's beak (새 부리)", size=9)
     text(ax, 1.2, -1.6, "Active", size=9.5)
     text(ax, 10.8, -1.6, "Active", size=9.5)
     ax = axs[1]

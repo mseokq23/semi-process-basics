@@ -14,8 +14,8 @@ def lined_hole(ax, x0, x1, ybot, ytop, t, c, X0=0.0, X1=10.0, z=4, lw=0.6):
 
 # 1. 금속 비저항
 metals = [("Ag", 1.59, "가장 낮지만 부식, 확산 문제"), ("Cu", 1.68, "지금 배선 주력 (31편)"),
-          ("Al", 2.65, "예전 배선, 지금은 패드"), ("W", 5.3, "컨택 플러그"), ("Mo", 5.3, "차세대 후보"),
-          ("Co", 6.2, "가는 배선, 컨택 일부"), ("Ru", 7.1, "차세대 후보"), ("Ti", 42, "접착층, 배리어 (TiN)")]
+          ("Al", 2.65, "예전 배선, 지금은 pad"), ("W", 5.3, "contact plug"), ("Mo", 5.3, "차세대 후보"),
+          ("Co", 6.2, "가는 배선, contact 일부"), ("Ru", 7.1, "차세대 후보"), ("Ti", 42, "접착층, barrier (TiN)")]
 f, ax = plot_ax(8.4, 4.0)
 ax.grid(False)
 for i, (m, r, s) in enumerate(metals):
@@ -26,13 +26,13 @@ for i, (m, r, s) in enumerate(metals):
 ax.set_yticks(range(len(metals)))
 ax.set_yticklabels([m[0] for m in metals][::-1], fontsize=11)
 ax.set_xlim(0, 75)
-ax.set_xlabel("벌크 비저항 (µΩ·cm, 상온 대략값)")
-ax.set_title("배선, 컨택에 쓰는 금속의 비저항", loc="left", fontsize=11)
+ax.set_xlabel("bulk 비저항 (µΩ·cm, 상온 대략값)")
+ax.set_title("배선, contact에 쓰는 금속의 비저항", loc="left", fontsize=11)
 save(f, P, "resistivity_bars")
 
-# 2. Al 스파이킹
-f, axs = panels(2, 2, 5.4, 3.7, (0, 10), (-3.6, 3.2), titles=["Al을 Si에 바로 붙이면: 스파이크가 접합을 뚫음",
-                                                            "배리어(Ti/TiN)를 깔면: Si와 Al이 안 섞임"], size=10.5)
+# 2. Al spiking
+f, axs = panels(2, 2, 5.4, 3.7, (0, 10), (-3.6, 3.2), titles=["Al을 Si에 바로 붙이면: spike가 접합을 뚫음",
+                                                            "barrier(Ti/TiN)를 깔면: Si와 Al이 안 섞임"], size=10.5)
 for k, ax in enumerate(axs):
     rect(ax, 0, -3.6, 10, 3.6, "pw", lw=0.6)
     rect(ax, 2.0, -0.7, 6.0, 0.7, "np", lw=0.6)
@@ -54,11 +54,11 @@ for k, ax in enumerate(axs):
                   (0, 2.4)], "al", lw=0.7, z=4)
         text(ax, 5.0, 1.85, "Al", size=10, weight="bold")
         text(ax, 5.0, -0.35, "n⁺", size=9.5)
-        text(ax, 8.4, 2.85, "Ti/TiN 배리어", size=9.2, color=C["tin"], weight="bold")
+        text(ax, 8.4, 2.85, "Ti/TiN barrier", size=9.2, color=C["tin"], weight="bold")
     text(ax, 1.5, -2.6, "p형 Si", size=9.5)
 save(f, P, "al_spiking")
 
-# 3. 일렉트로마이그레이션
+# 3. electromigration
 f, axs = plt.subplots(2, 1, figsize=(10.5, 5.6))
 rng = np.random.default_rng(7)
 for k, ax in enumerate(axs):
@@ -73,11 +73,11 @@ for k, ax in enumerate(axs):
             ax.plot(*zip(*pts), color="#5f6b78", lw=0.9, zorder=5)
             ax.plot([pts[1][0], pts[1][0] + rng.uniform(0.5, 1.0)], [0.7, 0.7 + rng.choice([-0.7, 0.7])],
                     color="#5f6b78", lw=0.9, zorder=5)
-        # 보이드, 힐록
+        # void, hillock
         ax.add_patch(Ellipse((1.6, 0.8), 1.2, 0.8, fc="white", ec="#333333", lw=0.8, zorder=6))
-        text(ax, 1.6, -0.55, "보이드 (끊어짐)", size=9.5, color=C["red"], weight="bold")
+        text(ax, 1.6, -0.55, "void (끊어짐)", size=9.5, color=C["red"], weight="bold")
         poly(ax, [(13.6, 1.4), (14.0, 2.1), (14.6, 2.3), (15.0, 1.4)], "al", lw=0.8, z=6)
-        text(ax, 14.3, -0.55, "힐록 (튀어나옴)", size=9.5, color=C["red"], weight="bold")
+        text(ax, 14.3, -0.55, "hillock (튀어나옴)", size=9.5, color=C["red"], weight="bold")
         for x in (4.5, 7.5, 10.5):
             arrow(ax, x, 1.0, x + 1.6, 1.0, color=C["red"], lw=1.5, ms=10, z=8)
         text(ax, 9.0, 2.35, "Al 원자 이동 (전자에 떠밀림)", size=9.5, color=C["red"])
@@ -124,8 +124,8 @@ ax.legend(fontsize=9.5)
 save(f, P, "black_eq")
 
 # 5. Al 배선 만드는 순서 (식각 방식)
-tt = ["① W 플러그까지 완성된 절연막", "② Ti/TiN + Al-Cu + TiN 연속 증착 (PVD)", "③ 포토: 배선 모양으로 PR",
-      "④ 염소 계열 플라즈마로 금속 식각", "⑤ PR 제거 + 부식 방지 처리", "⑥ 절연막(IMD)으로 채우고 CMP"]
+tt = ["① W plug까지 완성된 절연막", "② Ti/TiN + Al-Cu + TiN 연속 증착 (PVD)", "③ photo: 배선 모양으로 PR",
+      "④ 염소 계열 plasma로 금속 식각", "⑤ PR 제거 + 부식 방지 처리", "⑥ 절연막(IMD)으로 채우고 CMP"]
 f, axs = panels(6, 3, 4.1, 2.75, (0, 10), (-0.6, 5.0), titles=tt, size=10)
 L = [(1.6, 3.4), (6.6, 8.4)]
 for k, ax in enumerate(axs):
@@ -166,7 +166,7 @@ for k, ax in enumerate(axs):
             rect(ax, a, 3.15, b - a, 0.12, "tin", lw=0.5, z=4)
 save(f, P, "al_flow")
 
-# 6. 컨택 채우기: PVD Al vs CVD W
+# 6. contact 채우기: PVD Al vs CVD W
 f, axs = panels(2, 2, 4.8, 3.9, (0, 10), (-1.2, 6.2), titles=["PVD Al: 입구가 먼저 막혀서 속이 빔",
                                                             "CVD W: 사방에서 고르게 자라서 꽉 참"], size=10.5)
 for k, ax in enumerate(axs):
@@ -179,7 +179,7 @@ for k, ax in enumerate(axs):
         poly(ax, [(4.2, 0.0), (5.8, 0.0), (5.8, 0.25), (5.4, 0.35), (4.6, 0.35), (4.2, 0.25)], "al", lw=0.6, z=4)
         poly(ax, [(4.2, 0.3), (4.36, 0.3), (4.3, 3.4), (4.2, 3.5)], "al", lw=0.5, z=4)
         poly(ax, [(5.8, 0.3), (5.64, 0.3), (5.7, 3.4), (5.8, 3.5)], "al", lw=0.5, z=4)
-        text(ax, 5.0, 2.0, "보이드", size=9.5, color=C["red"], weight="bold")
+        text(ax, 5.0, 2.0, "void", size=9.5, color=C["red"], weight="bold")
         text(ax, 7.9, 5.95, "윗부분이 튀어나와 입구를 막음", size=8.8, color="#444444")
     else:
         rect(ax, 4.2, 0, 1.6, 4.5, "tin", lw=0.5, z=4)
@@ -187,13 +187,13 @@ for k, ax in enumerate(axs):
         rect(ax, 0, 4.5, 10, 0.1, "tin", lw=0.5, z=4)
         rect(ax, 0, 4.6, 10, 0.8, "w", lw=0.5, z=4)
         line(ax, [5.0, 5.0], [1.0, 4.4], color="#2b2b2b", lw=0.8, ls=":", z=6)
-        text(ax, 6.6, 2.4, "가운데 얇은 심\n(seam)은 남을 수 있음", size=8.6, color="#444444", ha="left")
-    text(ax, 2.0, -0.6, "실리사이드", size=9, color="white")
+        text(ax, 6.6, 2.4, "가운데 얇은\nseam은 남을 수 있음", size=8.6, color="#444444", ha="left")
+    text(ax, 2.0, -0.6, "silicide", size=9, color="white")
 save(f, P, "al_vs_w_fill")
 
-# 7. W 플러그 단계
-tt = ["① 컨택 식각 (실리사이드까지)", "② Ti (PVD) + TiN (CVD / ALD)", "③ W 핵 생성층 (WF₆ + SiH₄ / B₂H₆)",
-      "④ W 본 증착 (WF₆ + H₂)", "⑤ W CMP → 플러그"]
+# 7. W plug 단계
+tt = ["① contact 식각 (silicide까지)", "② Ti (PVD) + TiN (CVD / ALD)", "③ W 핵 생성층 (WF₆ + SiH₄ / B₂H₆)",
+      "④ W 본 증착 (WF₆ + H₂)", "⑤ W CMP → plug"]
 f, axs = panels(5, 3, 3.9, 3.3, (0, 10), (-1.2, 6.0), titles=tt, size=10)
 x0, x1, yb, yt = 4.2, 5.8, 0.0, 4.5
 T1, T2 = 0.18, 0.16

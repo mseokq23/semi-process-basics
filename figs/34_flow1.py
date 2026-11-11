@@ -5,10 +5,10 @@ import cmos
 P = 34
 
 # 1. 전체 흐름
-phases = [("소자 분리\n(STI)", "7, 17, 23, 32편", "#e3f2fd"), ("웰", "26 ~ 28편", "#fde2e2"),
-          ("게이트", "6, 22, 18편", "#fff3e0"), ("LDD, 스페이서", "26, 20, 18편", "#e8f5e9"),
-          ("소스 / 드레인", "26 ~ 28편", "#fde2e2"), ("실리사이드", "29편", "#ede7f6"),
-          ("컨택", "23, 30, 32편", "#eceff1"), ("배선", "31, 32편", "#fbe9e7")]
+phases = [("소자 분리\n(STI)", "7, 17, 23, 32편", "#e3f2fd"), ("well", "26 ~ 28편", "#fde2e2"),
+          ("gate", "6, 22, 18편", "#fff3e0"), ("LDD, spacer", "26, 20, 18편", "#e8f5e9"),
+          ("source / drain", "26 ~ 28편", "#fde2e2"), ("silicide", "29편", "#ede7f6"),
+          ("contact", "23, 30, 32편", "#eceff1"), ("배선", "31, 32편", "#fbe9e7")]
 f, ax = canvas(14.4, 3.0, (0, 40), (-1.8, 6.4))
 for i, (s, ref, c) in enumerate(phases):
     x = 0.3 + i * 4.95
@@ -17,7 +17,7 @@ for i, (s, ref, c) in enumerate(phases):
     if i < len(phases) - 1:
         arrow(ax, x + 4.35, 2.9, x + 4.9, 2.9, lw=1.2, ms=9)
 ax.plot([0.3, 19.9], [5.2, 5.2], color=C["blue"], lw=2.0)
-text(ax, 10.1, 5.75, "34편: STI ~ 게이트", size=10, color=C["blue"], weight="bold")
+text(ax, 10.1, 5.75, "34편: STI ~ gate", size=10, color=C["blue"], weight="bold")
 ax.plot([15.15, 39.6], [-0.9, -0.9], color=C["red"], lw=2.0)
 text(ax, 27.4, -1.45, "35편: LDD ~ 배선", size=10, color=C["red"], weight="bold")
 save(f, P, "flow_overview")
@@ -36,7 +36,7 @@ for g in range(4):
                names=dict(ox="SiO₂"))
     save(f, P, f"a{g + 1}")
 
-# 3. 레이아웃 (위에서 본 모습)
+# 3. layout (위에서 본 모습)
 f, ax = canvas(10.5, 5.6, (-1.5, 25.5), (-2.4, 11.2))
 rect(ax, 0, -0.6, 12, 10.2, "pw", lw=0.6, z=1)
 rect(ax, 12, -0.6, 12, 10.2, "nw", lw=1.2, z=1, ls="--")

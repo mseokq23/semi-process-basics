@@ -30,8 +30,8 @@ if __name__ == "__main__":
     print(f"predep B 1000C 30min: sqrt(Dt) = {np.sqrt(D1 * t1) * 1e7:.0f} nm, Q = {Q:.2e} cm-2")
     print(f"drive-in 1100C 1h: sqrt(Dt) = {np.sqrt(Dt2) * 1e4:.3f} um, Cs = {Csurf:.2e}, xj = {xj * 1e4:.2f} um")
 
-    # 1. 확산 vs 이온주입 단면
-    tt = ["열확산: 표면이 가장 진하고, 마스크 밑으로도 퍼짐", "이온주입: 에너지로 깊이, 도즈로 양을 따로 조절"]
+    # 1. 확산 vs ion 주입 단면
+    tt = ["열확산: 표면이 가장 진하고, mask 밑으로도 퍼짐", "ion 주입: energy로 깊이, dose로 양을 따로 조절"]
     f, axs = panels(2, 2, 5.6, 3.4, (0, 10), (0, 6.4), titles=tt, size=10.5)
     for k, ax in enumerate(axs):
         rect(ax, 0.3, 0.3, 9.4, 3.6, "si", lw=0.6)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
                 ax.add_patch(e)
                 e.set_clip_path(clip)
             rect(ax, 0.3, 4.8, 9.4, 0.5, "#fff3e0", lw=0.4)
-            text(ax, 5.0, 5.05, "도펀트 소스 (기체, 도핑된 막)", size=8.8)
+            text(ax, 5.0, 5.05, "dopant source (기체, doping된 막)", size=8.8)
         else:
             ax.add_patch(Ellipse((5.0, 2.9), 2.9, 1.1, fc=C["pp"], ec="none", alpha=0.75, zorder=2))
             rect(ax, 0.3, 4.8, 9.4, 0.0, "white", lw=0)
@@ -76,13 +76,13 @@ if __name__ == "__main__":
             text(ax, 4.0, 0.95 + 0.0, "격자 사이 원자", size=9.5, color="#555555")
     save(f, P, "mechanisms")
 
-    # 3. 두 가지 해: erfc (선확산) / Gaussian (드라이브인)
+    # 3. 두 가지 해: erfc (선확산) / Gaussian (drive-in)
     x = np.linspace(0, 2.0e-4, 600)          # cm
     pre = Cs * verfc(x / (2 * np.sqrt(D1 * t1)))
     gau = Q / np.sqrt(np.pi * Dt2) * np.exp(-x ** 2 / (4 * Dt2))
     f, ax = plot_ax(7.4, 4.4)
     ax.semilogy(x * 1e4, pre, color=PAL[0], lw=2.2, label="① 선확산: 표면 농도 일정 → erfc")
-    ax.semilogy(x * 1e4, gau, color=PAL[1], lw=2.2, label="② 드라이브인: 총량 일정 → 가우시안")
+    ax.semilogy(x * 1e4, gau, color=PAL[1], lw=2.2, label="② drive-in: 총량 일정 → Gaussian")
     ax.axhline(NB, color="#555555", lw=1.0, ls="--")
     ax.text(1.55, NB * 1.6, "기판 농도 10¹⁵", fontsize=9.5)
     ax.plot(xj * 1e4, NB, "o", color=PAL[1])
@@ -90,18 +90,18 @@ if __name__ == "__main__":
     ax.set_ylim(1e14, 3e20)
     ax.set_xlabel("깊이 (µm)")
     ax.set_ylabel("B 농도 (cm⁻³)")
-    ax.set_title("B: ① 1000 °C 30분 선확산 → ② 1100 °C 1시간 드라이브인 (계산)", loc="left", fontsize=11)
+    ax.set_title("B: ① 1000 °C 30분 선확산 → ② 1100 °C 1시간 drive-in (계산)", loc="left", fontsize=11)
     ax.legend(fontsize=9)
     save(f, P, "profiles")
 
-    # 4. 드라이브인 시간에 따른 변화
+    # 4. drive-in 시간에 따른 변화
     f, ax = plot_ax(7.2, 4.2)
     for th, c in zip((0.25, 1, 4, 16), PAL):
         Dt = D2 * th * 3600
         ax.plot(x * 1e4, Q / np.sqrt(np.pi * Dt) * np.exp(-x ** 2 / (4 * Dt)), color=c, lw=2, label=f"{th:g} 시간")
     ax.set_xlabel("깊이 (µm)")
     ax.set_ylabel("B 농도 (cm⁻³)")
-    ax.set_title("1100 °C 드라이브인: 총량(면적)은 같고 깊이 퍼짐", loc="left")
+    ax.set_title("1100 °C drive-in: 총량(면적)은 같고 깊이 퍼짐", loc="left")
     ax.legend()
     save(f, P, "drivein_time")
 
@@ -111,17 +111,17 @@ if __name__ == "__main__":
     NDb = 1e16
     xj2 = 2 * np.sqrt(Dt2) * np.sqrt(np.log(Csurf / NDb)) * 1e4
     f, ax = plot_ax(7.2, 4.2)
-    ax.semilogy(xx, NA, color=PAL[1], lw=2, label="넣은 B (억셉터)")
-    ax.semilogy(xx, np.full_like(xx, NDb), color=PAL[0], lw=2, label="기판 n형 도핑 (도너)")
-    ax.semilogy(xx, np.abs(NA - NDb) + 1e12, "--", color="#222222", lw=1.6, label="순 도핑 |N_A − N_D|")
+    ax.semilogy(xx, NA, color=PAL[1], lw=2, label="넣은 B (acceptor)")
+    ax.semilogy(xx, np.full_like(xx, NDb), color=PAL[0], lw=2, label="기판 n형 doping (donor)")
+    ax.semilogy(xx, np.abs(NA - NDb) + 1e12, "--", color="#222222", lw=1.6, label="순 doping |N_A − N_D|")
     ax.axvline(xj2, color="#999999", lw=1.0, ls=":")
-    ax.text(xj2 + 0.03, 1e18, "접합 (x_j)\n여기서 p → n", fontsize=9.5)
+    ax.text(xj2 + 0.03, 2e17, "접합 (x_j)\n여기서 p → n", fontsize=9.5)
     ax.text(0.15, 3e14, "p형", fontsize=11, color=PAL[1])
     ax.text(1.6, 3e14, "n형", fontsize=11, color=PAL[0])
     ax.set_ylim(1e14, 3e19)
     ax.set_xlabel("깊이 (µm)")
     ax.set_ylabel("농도 (cm⁻³)")
-    ax.set_title("접합 깊이: 넣은 도펀트 = 기판 도핑이 되는 깊이", loc="left")
+    ax.set_title("접합 깊이: 넣은 dopant = 기판 doping이 되는 깊이", loc="left")
     ax.legend(fontsize=9, loc="upper right")
     save(f, P, "junction_depth")
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         ax.semilogy(1000 / (Ts + 273.15), [D(el, T) for T in Ts], color=c, lw=2.2, label=el)
     ax.set_xlabel("1000 / T (1/K)")
     ax.set_ylabel("확산계수 D (cm²/s)")
-    ax.set_title("진성 확산계수 (도핑이 낮을 때): B, P가 빠르고 As, Sb가 느림", loc="left", fontsize=11)
+    ax.set_title("진성 확산계수 (doping이 낮을 때): B, P가 빠르고 As, Sb가 느림", loc="left", fontsize=11)
     ax.legend()
     sec = ax.secondary_xaxis("top", functions=(lambda v: 1000 / v - 273.15, lambda v: 1000 / (v + 273.15)))
     sec.set_xlabel("°C")
