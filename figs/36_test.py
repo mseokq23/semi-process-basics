@@ -135,7 +135,7 @@ ax.legend(fontsize=9)
 save(f, P, "yield_models")
 
 # 7. die 크기와 수율 (같은 결함 분포)
-rng = np.random.default_rng(4)
+rng = np.random.default_rng(26)
 R, EDGE = 150.0, 3.0
 D0 = 0.1                                   # 개/cm²
 nd = rng.poisson(D0 * np.pi * (R / 10) ** 2)
